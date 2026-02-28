@@ -1,0 +1,4 @@
+# Must match viaproxy-auth-secret in ViaProxy viabedrock.yml
+auth-secret: ""
+# Token validity period (seconds), prevents replay attacks
+token-timeout: 30

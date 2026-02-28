@@ -1,0 +1,4 @@
+name: ViaProxyAuth-WDPE
+version: 1.0.0
+author: LT_Name
+main: cn.lanink.viaproxyauthwdpe.ViaProxyAuthPlugin
