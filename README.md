@@ -28,6 +28,21 @@ token-timeout: 30
 
 > 如果 `auth-secret` 为空，插件将跳过验证，允许所有 ViaProxy 连接。
 
+## Java TAB 延迟
+
+基岩版 `PlayerListPacket` 没有 ping 字段，Java 原版 TAB 会把未知延迟画成 `X`。本插件按下游服分组，把 `ProxiedPlayer.getPing()`（上游 RakNet RTT）编成 `waterdog:player_latency_v1` ScriptMessage 快照发给同服所有在线玩家。ViaBedrock 把它写成 Java `PLAYER_INFO_UPDATE`。
+
+- 默认每 20 tick（1 秒）广播一次
+- 进服（`InitialServerConnectedEvent`）和切服（`TransferCompleteEvent`）会立刻再发一次
+- **不**用 `ViaProxyAuthToken` / `isJavaClient()` 过滤接收者：正式环境经常不配密钥
+- 原版基岩客户端会忽略未知 ScriptMessage
+- `onStartup` 里调用 `ProtocolCodecs.addHandledPacket(ScriptMessagePacket.class)`，避免 fast codec 丢掉插件自己构造的包
+
+```yaml
+broadcast-player-latency: true
+player-latency-interval-ticks: 20
+```
+
 ## 构建
 
 需要 Java 17+。
@@ -36,7 +51,7 @@ token-timeout: 30
 mvn clean package
 ```
 
-构建产物位于 `target/ViaProxyAuth-WDPE-1.0.0.jar`。
+构建产物位于 `target/ViaProxyAuth-WDPE-1.1.0.jar`。
 
 ## 安装
 

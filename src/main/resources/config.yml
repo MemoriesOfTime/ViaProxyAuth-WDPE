@@ -2,3 +2,9 @@
 auth-secret: ""
 # Token validity period (seconds), prevents replay attacks
 token-timeout: 30
+# Broadcast each player's RakNet ping as waterdog:player_latency_v1 so Java TAB
+# can show Bedrock players as real milliseconds instead of X. Native Bedrock
+# clients ignore the ScriptMessage. Set false to disable.
+broadcast-player-latency: true
+# How often to send a full snapshot, in Waterdog ticks (20 ticks = 1 second).
+player-latency-interval-ticks: 20
